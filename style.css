@@ -1,10 +1,11 @@
 body {
     font-family: "Caveat", cursive;
+    
 }
 
 #header{
     padding: 10px;
-    background-color: lightsalmon;
+    background-color: #ffa07a;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -15,7 +16,7 @@ body {
 }
 
 #text {
-    color: brown;
+    color: #a52a2a;
     line-height: 15px;
 }
 
@@ -24,3 +25,12 @@ body {
     padding-right: 35px;
     font-size: 35px;
 }
+
+#contents {
+    color: #a52a2a;
+    padding-top: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

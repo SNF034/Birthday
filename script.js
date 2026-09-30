@@ -28,8 +28,35 @@ async function startTyping() {
     }
 }
 
+// Hide text initially
 elements.forEach(element => {
     element.style.visibility = "hidden";
 });
 
-startTyping();
+// Continuous confetti
+function continuousConfetti() {
+    confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 }
+    });
+
+    confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 }
+    });
+}
+
+window.onload = function() {
+    // Start confetti
+    continuousConfetti();
+
+    // Keep launching confetti
+    setInterval(continuousConfetti, 250);
+
+    // Start typing
+    startTyping();
+};

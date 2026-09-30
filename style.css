@@ -1,0 +1,26 @@
+body {
+    font-family: "Caveat", cursive;
+}
+
+#header{
+    padding: 10px;
+    background-color: lightsalmon;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+#text {
+    color: brown;
+    line-height: 15px;
+}
+
+#emoji {
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: 35px;
+}

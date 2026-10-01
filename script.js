@@ -1,10 +1,15 @@
 const elements = document.querySelectorAll("#contents h1, #contents h3");
+
 const countdown = document.getElementById("countdown");
 const present = document.getElementById("present");
 const presentLink = document.getElementById("presentLink");
+const waitText = document.getElementById("waitText");
+
 
 // October 6, 2026 at 10:00 PM Korea time
-const targetDate = new Date("2026-10-06T22:00:00+09:00").getTime();
+// const targetDate = new Date("2026-10-06T22:00:00+09:00").getTime();
+
+const targetDate = Date.now() + 30000;
 
 
 // -------------------------
@@ -12,6 +17,7 @@ const targetDate = new Date("2026-10-06T22:00:00+09:00").getTime();
 // -------------------------
 
 function typeText(element) {
+
     const text = element.textContent;
 
     element.textContent = "";
@@ -20,32 +26,46 @@ function typeText(element) {
     let i = 0;
 
     return new Promise(resolve => {
+
         function type() {
+
             if (i < text.length) {
+
                 element.textContent += text.charAt(i);
+
                 i++;
 
                 setTimeout(type, 55);
+
             } else {
+
                 // Small pause before next line
                 setTimeout(resolve, 500);
+
             }
+
         }
 
         type();
+
     });
+
 }
 
 
 async function startTyping() {
+
     for (const element of elements) {
+
         await typeText(element);
+
     }
 
     // Wait a little after all text finishes
     setTimeout(() => {
         startCountdown();
     }, 700);
+
 }
 
 
@@ -57,58 +77,73 @@ function startCountdown() {
 
     const now = Date.now();
 
+
     // If the page is opened after the countdown,
-    // don't show the countdown.
+    // unlock the present immediately.
     if (now >= targetDate) {
+
+        countdown.style.visibility = "visible";
+        countdown.style.opacity = "1";
+
         present.style.visibility = "visible";
         present.style.opacity = "1";
+
+        document.getElementById("timer").textContent =
+            "🎁 Ready to open your gift? 🎁";
+
+        waitText.style.display = "none";
 
         presentLink.classList.add("unlocked");
 
         return;
     }
 
+
     // Show countdown and present
     countdown.style.visibility = "visible";
     present.style.visibility = "visible";
 
+
     // Fade them in
     setTimeout(() => {
+
         countdown.style.opacity = "1";
         present.style.opacity = "1";
+
     }, 50);
 
 
     function updateCountdown() {
 
         const now = Date.now();
+
         const difference = targetDate - now;
 
-        // Countdown is finished
+
+        // -------------------------
+        // COUNTDOWN FINISHED
+        // -------------------------
+
         if (difference <= 0) {
 
-            countdown.style.opacity = "0";
+            document.getElementById("timer").textContent =
+                "🎁 Ready to open your gift? 🎁";
 
-            setTimeout(() => {
-                countdown.style.visibility = "hidden";
+            // Hide "But you have to wait first 🤭"
+            waitText.style.display = "none";
 
-                // Change the countdown text
-                document.getElementById("timer").textContent = "🎁 Ready to open your gift? 🎁";
+            // Unlock present
+            presentLink.classList.add("unlocked");
 
-                // Show the message
-                countdown.style.visibility = "visible";
-                countdown.style.opacity = "1";
+            clearInterval(interval);
 
-        }, 1500);
+            return;
+        }
 
-    // Unlock present
-    presentLink.classList.add("unlocked");
 
-    clearInterval(interval);
-
-    return;
-}
-
+        // -------------------------
+        // CALCULATE TIME
+        // -------------------------
 
         const days = Math.floor(
             difference / (1000 * 60 * 60 * 24)
@@ -127,14 +162,20 @@ function startCountdown() {
         );
 
 
+        // Display countdown
         document.getElementById("timer").textContent =
             `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
     }
 
 
+    // Run immediately
     updateCountdown();
 
+
+    // Update every second
     const interval = setInterval(updateCountdown, 1000);
+
 }
 
 
@@ -143,6 +184,7 @@ function startCountdown() {
 // -------------------------
 
 function continuousConfetti() {
+
     confetti({
         particleCount: 5,
         angle: 60,
@@ -150,68 +192,96 @@ function continuousConfetti() {
         origin: { x: 0 }
     });
 
+
     confetti({
         particleCount: 5,
         angle: 120,
         spread: 55,
         origin: { x: 1 }
     });
+
 }
 
-setInterval(() => {
-    continuousConfetti();
-}, 250);
+
+// Start confetti
+continuousConfetti();
+
+setInterval(continuousConfetti, 250);
+
 
 // -------------------------
-// DRUMROLL
-// NEW: Present click transition
+// PRESENT
+// -------------------------
+
 presentLink.addEventListener("click", function(event) {
+
+    // Prevent clicking before countdown is finished
+    if (!presentLink.classList.contains("unlocked")) {
+
+        event.preventDefault();
+
+        return;
+    }
+
+
     event.preventDefault();
 
     const link = this;
 
+
     // Play drumroll
     const drumroll = new Audio("drumroll.mp3");
+
+    drumroll.volume = 0.5;
+
     drumroll.play();
 
-    // NEW: Wait until audio is completely finished
+
+    // Wait until drumroll is completely finished
     drumroll.addEventListener("ended", function() {
 
-        // NEW: Fade out the current page
+        // Fade out current page
         document.body.classList.add("fade-out");
 
-        // NEW: Go to present.html after fade finishes
+
+        // Go to present.html after fade
         setTimeout(function() {
+
             window.location.href = link.href;
+
         }, 1000);
 
     });
+
 });
+
 
 // -------------------------
 // START EVERYTHING
 // -------------------------
 
+
 // Hide text initially
 elements.forEach(element => {
+
     element.style.visibility = "hidden";
+
 });
+
 
 // Hide countdown initially
 countdown.style.visibility = "hidden";
 countdown.style.opacity = "0";
 
+
 // Hide present initially
 present.style.visibility = "hidden";
 present.style.opacity = "0";
 
-// Lock present initially
-presentLink.style.pointerEvents = "auto";
-presentLink.style.cursor = "pointer";
+
+// Make sure present starts LOCKED
+presentLink.classList.remove("unlocked");
+
 
 // Start typing
 startTyping();
-
-// Start continuous confetti
-continuousConfetti();
-setInterval(continuousConfetti, 250);

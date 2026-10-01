@@ -1,6 +1,12 @@
 body {
     font-family: "Caveat", cursive;
     background-color: #FFEDE6;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+body.fade-in {
+    opacity: 1;
 }
 
 button {

@@ -164,15 +164,27 @@ setInterval(() => {
 
 // -------------------------
 // DRUMROLL
+// NEW: Present click transition
 presentLink.addEventListener("click", function(event) {
     event.preventDefault();
 
-    const drumroll = new Audio("drumroll.mp3");
+    const link = this;
 
+    // Play drumroll
+    const drumroll = new Audio("drumroll.mp3");
     drumroll.play();
 
+    // NEW: Wait until audio is completely finished
     drumroll.addEventListener("ended", function() {
-        window.location.href = "present.html";
+
+        // NEW: Fade out the current page
+        document.body.classList.add("fade-out");
+
+        // NEW: Go to present.html after fade finishes
+        setTimeout(function() {
+            window.location.href = link.href;
+        }, 1000);
+
     });
 });
 
@@ -194,8 +206,8 @@ present.style.visibility = "hidden";
 present.style.opacity = "0";
 
 // Lock present initially
-presentLink.style.pointerEvents = "none";
-presentLink.style.cursor = "not-allowed";
+presentLink.style.pointerEvents = "auto";
+presentLink.style.cursor = "pointer";
 
 // Start typing
 startTyping();

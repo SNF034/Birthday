@@ -1,5 +1,4 @@
-const elements = document.querySelectorAll("#contents h2, #contents h4");
-
+const elements = document.querySelectorAll("#contents h1, #contents h3");
 const countdown = document.getElementById("countdown");
 const present = document.getElementById("present");
 const presentLink = document.getElementById("presentLink");

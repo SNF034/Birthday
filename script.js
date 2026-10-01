@@ -1,7 +1,20 @@
 const elements = document.querySelectorAll("#contents h2, #contents h4");
 
+const countdown = document.getElementById("countdown");
+const present = document.getElementById("present");
+const presentLink = document.getElementById("presentLink");
+
+// October 6, 2026 at 10:00 PM Korea time
+const targetDate = new Date("2026-10-06T22:00:00+09:00").getTime();
+
+
+// -------------------------
+// TYPE TEXT
+// -------------------------
+
 function typeText(element) {
     const text = element.textContent;
+
     element.textContent = "";
     element.style.visibility = "visible";
 
@@ -12,9 +25,11 @@ function typeText(element) {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
                 i++;
-                setTimeout(type, 50);
+
+                setTimeout(type, 55);
             } else {
-                resolve();
+                // Small pause before next line
+                setTimeout(resolve, 500);
             }
         }
 
@@ -22,19 +37,107 @@ function typeText(element) {
     });
 }
 
+
 async function startTyping() {
     for (const element of elements) {
         await typeText(element);
     }
+
+    // Wait a little after all text finishes
+    setTimeout(() => {
+        startCountdown();
+    }, 700);
 }
 
-// Hide text initially
-elements.forEach(element => {
-    element.style.visibility = "hidden";
-});
 
-// Continuous confetti
+// -------------------------
+// COUNTDOWN
+// -------------------------
+
+function startCountdown() {
+
+    const now = Date.now();
+
+    // If the page is opened after the countdown,
+    // don't show the countdown.
+    if (now >= targetDate) {
+        present.style.visibility = "visible";
+        present.style.opacity = "1";
+
+        presentLink.classList.add("unlocked");
+
+        return;
+    }
+
+    // Show countdown and present
+    countdown.style.visibility = "visible";
+    present.style.visibility = "visible";
+
+    // Fade them in
+    setTimeout(() => {
+        countdown.style.opacity = "1";
+        present.style.opacity = "1";
+    }, 50);
+
+
+    function updateCountdown() {
+
+        const now = Date.now();
+        const difference = targetDate - now;
+
+        // Countdown is finished
+        if (difference <= 0) {
+
+            countdown.style.opacity = "0";
+
+            setTimeout(() => {
+                countdown.style.visibility = "hidden";
+            }, 1500);
+
+            // Unlock the present
+            presentLink.classList.add("unlocked");
+
+            // Stop checking the countdown
+            clearInterval(interval);
+
+            return;
+        }
+
+
+        const days = Math.floor(
+            difference / (1000 * 60 * 60 * 24)
+        );
+
+        const hours = Math.floor(
+            (difference / (1000 * 60 * 60)) % 24
+        );
+
+        const minutes = Math.floor(
+            (difference / (1000 * 60)) % 60
+        );
+
+        const seconds = Math.floor(
+            (difference / 1000) % 60
+        );
+
+
+        document.getElementById("timer").textContent =
+            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+
+    updateCountdown();
+
+    const interval = setInterval(updateCountdown, 1000);
+}
+
+
+// -------------------------
+// CONTINUOUS CONFETTI
+// -------------------------
+
 function continuousConfetti() {
+
     confetti({
         particleCount: 5,
         angle: 60,
@@ -50,13 +153,31 @@ function continuousConfetti() {
     });
 }
 
-window.onload = function() {
-    // Start confetti
-    continuousConfetti();
 
-    // Keep launching confetti
-    setInterval(continuousConfetti, 250);
+// -------------------------
+// START EVERYTHING
+// -------------------------
 
-    // Start typing
-    startTyping();
-};
+// Hide text initially
+elements.forEach(element => {
+    element.style.visibility = "hidden";
+});
+
+// Hide countdown initially
+countdown.style.visibility = "hidden";
+countdown.style.opacity = "0";
+
+// Hide present initially
+present.style.visibility = "hidden";
+present.style.opacity = "0";
+
+// Lock present initially
+presentLink.style.pointerEvents = "none";
+presentLink.style.cursor = "not-allowed";
+
+// Start typing
+startTyping();
+
+// Start continuous confetti
+continuousConfetti();
+setInterval(continuousConfetti, 250);

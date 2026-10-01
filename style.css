@@ -17,7 +17,7 @@ body {
 
 #text {
     color: #a52a2a;
-    line-height: 15px;
+    line-height: 20px;
 }
 
 #emoji {
@@ -34,3 +34,57 @@ body {
     text-align: center;
 }
 
+#countdown {
+    color: #a52a2a;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#present {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#presentLink {
+    display: inline-block;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+#present img {
+    width: 200px;
+    animation: shake 1.5s infinite ease-in-out;
+}
+
+#presentLink.unlocked {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}

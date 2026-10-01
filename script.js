@@ -136,7 +136,6 @@ function startCountdown() {
 // -------------------------
 
 function continuousConfetti() {
-
     confetti({
         particleCount: 5,
         angle: 60,
@@ -151,6 +150,10 @@ function continuousConfetti() {
         origin: { x: 1 }
     });
 }
+
+setInterval(() => {
+    continuousConfetti();
+}, 250);
 
 
 // -------------------------

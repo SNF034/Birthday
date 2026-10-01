@@ -18,3 +18,25 @@ button:hover {
     color: #ffa07a;
     border: 2px solid #ffa07a;
 }
+
+#header{
+    padding: 10px;
+    background-color: #ffa07a;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+#text {
+    color: #a52a2a;
+}
+
+#emoji {
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: 35px;
+}

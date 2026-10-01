@@ -1,0 +1,20 @@
+body {
+    font-family: "Caveat", cursive;
+    background-color: #FFEDE6;
+}
+
+button {
+    font-family: "Caveat", cursive;
+    font-size: 22px;
+    background-color: #ffa07a;
+    color: #a52a2a;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #a52a2a;
+}
+
+button:hover {
+    background-color: #a52a2a;
+    color: #ffa07a;
+    border: 2px solid #ffa07a;
+}

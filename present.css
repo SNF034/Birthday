@@ -47,3 +47,16 @@ button:hover {
     text-align: center;
     padding-top: 15px;
 }
+
+#contents {
+    color: #a52a2a;
+    padding-top: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#THEgift {
+    width: 300px;
+    height: 200px;
+}

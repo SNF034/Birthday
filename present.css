@@ -40,3 +40,10 @@ button:hover {
     padding-right: 35px;
     font-size: 35px;
 }
+
+#button {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 15px;
+}

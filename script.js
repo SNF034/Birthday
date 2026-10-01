@@ -155,6 +155,19 @@ setInterval(() => {
     continuousConfetti();
 }, 250);
 
+// -------------------------
+// DRUMROLL
+presentLink.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    const drumroll = new Audio("drumroll.mp3");
+
+    drumroll.play();
+
+    drumroll.addEventListener("ended", function() {
+        window.location.href = "present.html";
+    });
+});
 
 // -------------------------
 // START EVERYTHING

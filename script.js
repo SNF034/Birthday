@@ -91,16 +91,23 @@ function startCountdown() {
 
             setTimeout(() => {
                 countdown.style.visibility = "hidden";
-            }, 1500);
 
-            // Unlock the present
-            presentLink.classList.add("unlocked");
+                // Change the countdown text
+                document.getElementById("timer").textContent = "🎁 Ready to open your gift? 🎁";
 
-            // Stop checking the countdown
-            clearInterval(interval);
+                // Show the message
+                countdown.style.visibility = "visible";
+                countdown.style.opacity = "1";
 
-            return;
-        }
+        }, 1500);
+
+    // Unlock present
+    presentLink.classList.add("unlocked");
+
+    clearInterval(interval);
+
+    return;
+}
 
 
         const days = Math.floor(

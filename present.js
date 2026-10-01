@@ -19,11 +19,12 @@ function continuousConfetti() {
 }
 
 continuousConfetti();
+
 setInterval(continuousConfetti, 250);
 
 
 // -------------------------
-// FADE IN CONTENT + PARTY SOUND
+// FADE IN CONTENT + SOUNDS
 // -------------------------
 
 window.addEventListener("load", function () {
@@ -31,7 +32,10 @@ window.addEventListener("load", function () {
     const contents = document.getElementById("contents");
     const button = document.getElementById("button");
 
-    // Fade in contents
+    // -------------------------
+    // FADE IN CONTENT
+    // -------------------------
+
     contents.style.transition = "opacity 2s ease";
 
     setTimeout(function () {
@@ -39,7 +43,10 @@ window.addEventListener("load", function () {
     }, 100);
 
 
-    // Show button after content finishes
+    // -------------------------
+    // FADE IN BUTTON
+    // -------------------------
+
     button.style.transition = "opacity 1.5s ease";
 
     setTimeout(function () {
@@ -47,9 +54,27 @@ window.addEventListener("load", function () {
     }, 2200);
 
 
-    // Play party sound ONCE
+    // -------------------------
+    // PARTY SOUND
+    // -------------------------
+
     const partySound = new Audio("party.mp3");
+    const backgroundMusic = document.getElementById("backgroundMusic");
+
     partySound.volume = 0.5;
+    backgroundMusic.volume = 0.3;
+
+    // Play party sound once
     partySound.play();
+
+    // -------------------------
+    // BACKGROUND MUSIC
+    // -------------------------
+
+    // Start background music AFTER
+    // the party sound finishes
+    partySound.addEventListener("ended", function () {
+        backgroundMusic.play();
+    });
 
 });

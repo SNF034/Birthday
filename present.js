@@ -1,5 +1,29 @@
 // -------------------------
-// FADE IN CONTENT
+// CONFETTI
+// -------------------------
+
+function continuousConfetti() {
+    confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 }
+    });
+
+    confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 }
+    });
+}
+
+continuousConfetti();
+setInterval(continuousConfetti, 250);
+
+
+// -------------------------
+// FADE IN CONTENT + PARTY SOUND
 // -------------------------
 
 window.addEventListener("load", function () {
@@ -15,38 +39,17 @@ window.addEventListener("load", function () {
     }, 100);
 
 
-    // Fade in button after contents
+    // Show button after content finishes
     button.style.transition = "opacity 1.5s ease";
 
     setTimeout(function () {
         button.style.opacity = "1";
     }, 2200);
 
+
+    // Play party sound ONCE
+    const partySound = new Audio("party.mp3");
+    partySound.volume = 0.5;
+    partySound.play();
+
 });
-
-
-// -------------------------
-// CONFETTI
-// -------------------------
-
-function continuousConfetti() {
-
-    confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 }
-    });
-
-    confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 }
-    });
-
-}
-
-continuousConfetti();
-
-setInterval(continuousConfetti, 250);

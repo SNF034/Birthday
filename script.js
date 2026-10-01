@@ -7,10 +7,7 @@ const waitText = document.getElementById("waitText");
 
 
 // October 6, 2026 at 10:00 PM Korea time
-// const targetDate = new Date("2026-10-06T22:00:00+09:00").getTime();
-
-const targetDate = Date.now() + 30000;
-
+const targetDate = new Date("2026-10-06T22:00:00+09:00").getTime();
 
 // -------------------------
 // TYPE TEXT
